@@ -3,18 +3,36 @@ import { OverviewLatestOrders } from "src/sections/overview/overview-latest-orde
 import { OverviewLatestProducts } from "src/sections/overview/overview-latest-products";
 import { OverviewSales } from "src/sections/overview/overview-sales";
 import getTopContributors from "./api/topContributors";
-import { subDays, subHours } from 'date-fns';
-import { Box, Badge, Container, IconButton, SvgIcon, Tooltip, Unstable_Grid2 as Grid} from '@mui/material';
-import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import BellIcon from '@heroicons/react/24/solid/BellIcon';
+import { subDays, subHours } from "date-fns";
+import {
+  Box,
+  Badge,
+  Container,
+  IconButton,
+  SvgIcon,
+  Tooltip,
+  Unstable_Grid2 as Grid,
+} from "@mui/material";
+import BellIcon from "@heroicons/react/24/solid/BellIcon";
+import getAuthor from "./api/getAuthor";
 
 const now = new Date();
 
 export const getServerSideProps = async () => {
-  const authors = await getTopContributors();
+  const contributors = await getTopContributors();
+  const authors = await Promise.all( // resolve all promises first when mapping
+    contributors.map(async (a) => {
+      const author = await getAuthor(a.slug);
+      return {
+        firstName: author.firstName,
+        lastName: author.lastName,
+        totalCount: a.totalCount,
+      };
+    })
+  );
   return {
     props: {
-      authors
+      authors: JSON.parse(JSON.stringify(authors)),
     },
   };
 };
@@ -22,9 +40,7 @@ export const getServerSideProps = async () => {
 const Page = (props) => (
   <>
     <Head>
-      <title>
-        Overview | Devias Kit
-      </title>
+      <title>Overview | Devias Kit</title>
     </Head>
     <Box
       component="main"
@@ -33,24 +49,27 @@ const Page = (props) => (
         py: 8,
       }}
     >
-    <Box
-      sx={{ position: "fixed", top: 20, right: 20, zIndex: 1000}}
-    >
-      <Tooltip title="Urgent Questions">
-        <IconButton 
-        onClick={() => { alert('clicked') }}>
-          <Badge
-            badgeContent={2}
-            color="primary"
-            sx={{ "& .MuiBadge-badge": {height: 30, minWidth: 30, borderRadius: 10, fontSize: 20}}}
+      <Box sx={{ position: "fixed", top: 20, right: 20, zIndex: 1000 }}>
+        <Tooltip title="Urgent Questions">
+          <IconButton
+            onClick={() => {
+              alert("clicked");
+            }}
           >
-            <SvgIcon sx={{ fontSize: 50 }}>
-              <BellIcon/>
-            </SvgIcon>
-          </Badge>
-        </IconButton>
-      </Tooltip>
-    </Box>
+            <Badge
+              badgeContent={2}
+              color="primary"
+              sx={{
+                "& .MuiBadge-badge": { height: 30, minWidth: 30, borderRadius: 10, fontSize: 20 },
+              }}
+            >
+              <SvgIcon sx={{ fontSize: 50 }}>
+                <BellIcon />
+              </SvgIcon>
+            </Badge>
+          </IconButton>
+        </Tooltip>
+      </Box>
       <Container maxWidth="xl">
         <Grid
           container
@@ -103,6 +122,7 @@ const Page = (props) => (
               sx={{ height: "100%" }}
             />
           </Grid>
+          <Grid xs={12} md={12} lg={8}>
           <Grid
             xs={6}
             md={6}
@@ -167,9 +187,9 @@ const Page = (props) => (
             <OverviewSales
               chartSeries={[
                 {
-                  name: 'Data',
-                  data: [18, 16, 5, 8, 3, 14]
-                }
+                  name: "Data",
+                  data: [18, 16, 5, 8, 3, 14],
+                },
               ]}
               sx={{ height: "100%" }}
             />
