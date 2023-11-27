@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { format } from 'date-fns';
-import PropTypes from 'prop-types';
-import ArrowRightIcon from '@heroicons/react/24/solid/ArrowRightIcon';
+import { format } from "date-fns";
+import PropTypes from "prop-types";
+import ArrowRightIcon from "@heroicons/react/24/solid/ArrowRightIcon";
 import {
   Box,
   Button,
@@ -24,9 +24,9 @@ import IconButton from '@mui/material/IconButton';
 import { Collapse } from '@mui/material';
 
 const statusMap = {
-  pending: 'warning',
-  delivered: 'success',
-  refunded: 'error'
+  pending: "warning",
+  delivered: "success",
+  refunded: "error",
 };
 
 
@@ -37,12 +37,15 @@ export const OverviewLatestOrders = (props) => {
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Trending Posts" />
+      <CardHeader title="Latest Public Posts" />
       <Scrollbar sx={{ flexGrow: 1 }}>
         <Box sx={{ minWidth: 800 }}>
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell>Category</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Body</TableCell>
                 <TableCell>
                   Category
                 </TableCell>
@@ -87,5 +90,5 @@ export const OverviewLatestOrders = (props) => {
 
 OverviewLatestOrders.prototype = {
   orders: PropTypes.array,
-  sx: PropTypes.object
+  sx: PropTypes.object,
 };
