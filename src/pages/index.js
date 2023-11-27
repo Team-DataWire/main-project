@@ -20,7 +20,7 @@ import getLatestPosts from "./api/latestPosts";
 export const getServerSideProps = async () => {
   const contributors = await getTopContributors();
   const latestPosts = await getLatestPosts();
-
+  
   return {
     props: {
       contributors: JSON.parse(JSON.stringify(contributors)),
@@ -67,6 +67,7 @@ const Page = (props) => (
           <OverviewLatestOrders orders={props.latestPosts} sx={{ height: "100%" }} />
         </Grid>
         <Grid xs={12} md={12} lg={8}>
+
           <Grid xs={6} md={6} lg={6}>
             <OverviewLatestOrders
               orders={[
