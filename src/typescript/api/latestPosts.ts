@@ -1,4 +1,4 @@
-import prisma from "../../typescript/prisma";
+import prisma from "../prisma";
 import { Post } from ".prisma/client";
 
 interface PostData {
