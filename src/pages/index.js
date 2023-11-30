@@ -3,6 +3,9 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { OverviewLatestOrders } from "src/sections/overview/overview-latest-orders";
 import { OverviewLatestProducts } from "src/sections/overview/overview-latest-products";
 import { OverviewSales } from "src/sections/overview/overview-sales";
+import { TrendingPosts } from "src/sections/overview/trending-posts";
+import { StudentLeaderboard } from "src/sections/overview/student-leaderboard";
+import { CategoriesChart } from "src/sections/overview/post-categories-chart";
 import { subDays, subHours } from "date-fns";
 import {
   Box,
