@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { OverviewLatestOrders } from "src/sections/overview/overview-latest-orders";
 import { OverviewLatestProducts } from "src/sections/overview/overview-latest-products";
 import { OverviewSales } from "src/sections/overview/overview-sales";
@@ -41,7 +42,8 @@ const Page = (props) => (
         py: 8,
       }}
     >
-      <Box sx={{ position: "fixed", top: 20, right: 20, zIndex: 1000 }}>
+      <Box 
+        sx={{ position: "fixed", top: 20, right: 20, zIndex: 1000 }}>
         <Tooltip title="Urgent Questions">
           <IconButton
             onClick={() => {
@@ -55,7 +57,8 @@ const Page = (props) => (
                 "& .MuiBadge-badge": { height: 30, minWidth: 30, borderRadius: 10, fontSize: 20 },
               }}
             >
-              <SvgIcon sx={{ fontSize: 50 }}>
+              <SvgIcon 
+                sx={{ fontSize: 50 }}>
                 <BellIcon />
               </SvgIcon>
             </Badge>
@@ -63,12 +66,22 @@ const Page = (props) => (
         </Tooltip>
       </Box>
       <Container maxWidth="xl">
-        <Grid xs={6} md={6} lg={6}>
-          <OverviewLatestOrders orders={props.latestPosts} sx={{ height: "100%" }} />
+        <Grid 
+          xs={6} 
+          md={6} 
+          lg={6}>
+          <OverviewLatestOrders orders={props.latestPosts} 
+            sx={{ height: "100%" }} />
         </Grid>
-        <Grid xs={12} md={12} lg={8}>
+        <Grid 
+          xs={12} 
+          md={12} 
+          lg={8}>
 
-          <Grid xs={6} md={6} lg={6}>
+          <Grid 
+            xs={6} 
+            md={6} 
+            lg={6}>
             <OverviewLatestOrders
               orders={[
                 {
@@ -111,10 +124,16 @@ const Page = (props) => (
               sx={{ height: "100%" }}
             />
           </Grid>
-          <Grid xs={12} md={6} lg={4}>
-            <OverviewLatestProducts products={props.contributors} sx={{ height: "100%" }} />
+          <Grid 
+            xs={12} 
+            md={6} 
+            lg={4}>
+            <OverviewLatestProducts products={props.contributors} 
+              sx={{ height: "100%" }} />
           </Grid>
-          <Grid xs={9} lg={9}>
+          <Grid 
+            xs={9} 
+            lg={9}>
             <OverviewSales
               chartSeries={[
                 {

@@ -30,7 +30,8 @@ export const OverviewLatestProducts = (props) => {
           const hasDivider = index < products.length - 1;
 
           return (
-            <ListItem divider={hasDivider} key={index}>
+            <ListItem divider={hasDivider} 
+              key={index}>
               <ListItemAvatar>
                 {index < 3 ? (
                   <Box
