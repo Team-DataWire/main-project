@@ -31,13 +31,13 @@ const statusMap = {
 
 
 //Trending posts table
-export const OverviewLatestOrders = (props) => {
+export const TrendingPosts = (props) => {
   const { orders = [], sx } = props;
   const [open, setOpen] = React.useState(false);
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Latest Public Posts" />
+      <CardHeader title="Trending Posts" />
       <Scrollbar sx={{ flexGrow: 1 }}>
         <Box sx={{ minWidth: 800 }}>
           <Table>
@@ -81,7 +81,7 @@ export const OverviewLatestOrders = (props) => {
   );
 };
 
-OverviewLatestOrders.prototype = {
+TrendingPosts.prototype = {
   orders: PropTypes.array,
   sx: PropTypes.object,
 };

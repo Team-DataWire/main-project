@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { OverviewLatestOrders } from "src/sections/overview/overview-latest-orders";
-import { OverviewLatestProducts } from "src/sections/overview/overview-latest-products";
-import { OverviewSales } from "src/sections/overview/overview-sales";
+import { TrendingPosts } from "src/sections/overview/trending-posts";
+import { StudentLeaderboard } from "src/sections/overview/student-leaderboard";
+import { CategoriesChart } from "src/sections/overview/post-categories-chart";
 import { subDays, subHours } from "date-fns";
 import {
   Box,
@@ -70,7 +70,7 @@ const Page = (props) => (
           xs={6} 
           md={6} 
           lg={6}>
-          <OverviewLatestOrders orders={props.latestPosts} 
+          <TrendingPosts orders={props.latestPosts} 
             sx={{ height: "100%" }} />
         </Grid>
         <Grid 
@@ -82,7 +82,7 @@ const Page = (props) => (
             xs={6} 
             md={6} 
             lg={6}>
-            <OverviewLatestOrders
+            <TrendingPosts
               orders={[
                 {
                   id: "f69f88012978187a6c12897f",
@@ -128,13 +128,13 @@ const Page = (props) => (
             xs={12} 
             md={6} 
             lg={4}>
-            <OverviewLatestProducts products={props.contributors} 
+            <StudentLeaderboard products={props.contributors} 
               sx={{ height: "100%" }} />
           </Grid>
           <Grid 
             xs={9} 
             lg={9}>
-            <OverviewSales
+            <CategoriesChart
               chartSeries={[
                 {
                   name: "Data",
