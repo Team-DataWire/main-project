@@ -43,18 +43,10 @@ export const OverviewLatestOrders = (props) => {
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell />
                 <TableCell>Category</TableCell>
                 <TableCell>Title</TableCell>
                 <TableCell>Body</TableCell>
-                <TableCell>
-                  Category
-                </TableCell>
-                <TableCell>
-                  Title
-                </TableCell>
-                <TableCell>
-                  Post info
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -76,6 +68,7 @@ export const OverviewLatestOrders = (props) => {
                     </TableCell>   
                     <TableCell>{order.category}</TableCell>
                     <TableCell>{order.title}</TableCell>
+                    <TableCell>{order.body}</TableCell>
                   </TableRow>
                 );
               })}
