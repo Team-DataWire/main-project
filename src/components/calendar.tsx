@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Calendar from "react-calendar";
 
 import "react-calendar/dist/Calendar.css"; // import default CSS styling of calendar component
@@ -9,11 +8,15 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-function CalendarItem() {
+function CalendarItem({
+  value,
+  onChange,
+}: {
+  value: Value;
+  onChange: Dispatch<SetStateAction<Value>>;
+}) {
   const startDate = new Date(2022, 8, 15);
   const endDate = new Date(2022, 11, 15);
-  
-  const [value, onChange] = useState<Value>(startDate);
 
   /**
    * Return a date of format //
