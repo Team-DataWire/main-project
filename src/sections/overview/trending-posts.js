@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import ReactDOM from "react-dom";
-import { format } from "date-fns";
 import PropTypes from "prop-types";
-import ArrowRightIcon from "@heroicons/react/24/solid/ArrowRightIcon";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import IconButton from "@mui/material/IconButton";
 import {
   Box,
   Button,
@@ -17,11 +17,8 @@ import {
   TableHead,
   TableRow,
   Collapse,
+  TableContainer
 } from "@mui/material";
-import { Scrollbar } from "src/components/scrollbar";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import IconButton from "@mui/material/IconButton";
 
 const statusMap = {
   pending: "warning",
@@ -36,14 +33,15 @@ export const TrendingPosts = (props) => {
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Trending Posts" />
+      <CardHeader title="Trending Posts"/>
       <Box sx={sx}>
-        <Table>
+      <TableContainer sx={{height: 300}}> 
+        <Table sx={{height: "max-content"}}>
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell>Category</TableCell>
-              <TableCell>Title</TableCell>
+              <TableCell width="5%"></TableCell>
+              <TableCell align="left">Category</TableCell>
+              <TableCell align="left">Title</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -62,7 +60,7 @@ export const TrendingPosts = (props) => {
                   <TableRow>
                     <TableCell colSpan={5} sx={{ paddingBottom: 0, paddingTop: 0 }}>
                       <Collapse in={open === index} timeout="auto" unmountOnExit>
-                        <Box sx={{ width: "100%" }} minHeight={65}>
+                        <Box sx={{ width: "100%" }} minHeight={65} m={2}>
                           {order.body}
                         </Box>
                       </Collapse>
@@ -73,6 +71,7 @@ export const TrendingPosts = (props) => {
             })}
           </TableBody>
         </Table>
+        </TableContainer>
       </Box>
       <Divider />
     </Card>
