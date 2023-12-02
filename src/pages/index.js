@@ -43,7 +43,11 @@ const Page = () => {
       <Head>
         <title>Campuswire Analytics</title>
       </Head>
-      <CalendarItem value={date} onChange={setDate} />
+      <Container maxWidth="xl">
+        <Grid xs={12} md={6} lg={4}>
+          <CalendarItem value={date} onChange={setDate}/>
+        </Grid>
+      </Container>
       <Box
         component="main"
         sx={{
