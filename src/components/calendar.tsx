@@ -15,7 +15,7 @@ function CalendarItem({
   value: Value;
   onChange: Dispatch<SetStateAction<Value>>;
 }) {
-  const startDate = new Date(2022, 8, 15);
+  const startDate = new Date(2022, 8, 8);
   const endDate = new Date(2022, 11, 15);
 
   /**
