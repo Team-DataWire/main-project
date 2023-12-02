@@ -13,32 +13,37 @@ import {
   Unstable_Grid2 as Grid,
 } from "@mui/material";
 import BellIcon from "@heroicons/react/24/solid/BellIcon";
-import getTopContributors from "../typescript/api/topContributors";
-import getLatestUnresolved from "../typescript/api/latestUnresolved";
 import { useState, useEffect } from "react";
 import CalendarItem from "../components/calendar";
 
-export const getServerSideProps = async () => {
-  const contributors = await getTopContributors();
-  const latestUnresolvedPosts = await getLatestUnresolved();
-
-  return {
-    props: {
-      contributors: JSON.parse(JSON.stringify(contributors)),
-      latestUnresolvedPosts: JSON.parse(JSON.stringify(latestUnresolvedPosts)),
-    },
-  };
-};
-
-const Page = (props) => {
+const Page = () => {
   const [date, setDate] = useState(new Date(2022, 8, 5));
-  
+  const [contributors, setContributors] = useState([]);
+  const [latestUnresolvedPosts, setLatestUnresolvedPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchContributors = async () => {
+      const contributors = await fetch(`/api/topContributors?date=${date}`).then((res) =>
+        res.json()
+      );
+      setContributors(contributors);
+    };
+
+    const fetchLatestUnresolvedPosts = async () => {
+      const posts = await fetch(`/api/latestUnresolved?date=${date}`).then((res) => res.json());
+      setLatestUnresolvedPosts(posts);
+    };
+
+    fetchContributors();
+    fetchLatestUnresolvedPosts();
+  }, [date]);
+
   return (
     <>
       <Head>
         <title>Campuswire Analytics</title>
       </Head>
-      <CalendarItem value={date} onChange={setDate}/>
+      <CalendarItem value={date} onChange={setDate} />
       <Box
         component="main"
         sx={{
@@ -69,54 +74,14 @@ const Page = (props) => {
         </Box>
         <Container maxWidth="xl">
           <Grid xs={6} md={6} lg={6}>
-            <TrendingPosts orders={props.latestUnresolvedPosts} sx={{ height: "100%" }} />
+            <TrendingPosts orders={[]} sx={{ height: "100%" }} />
           </Grid>
           <Grid xs={12} md={12} lg={8}>
             <Grid xs={6} md={6} lg={6}>
-              <TrendingPosts
-                orders={[
-                  {
-                    id: "f69f88012978187a6c12897f",
-                    category: "Homework 1",
-                    title: "Title",
-                    body: "abcabacacacacac abcabacacacacac abcabacacacacac abcabacacacacac",
-                  },
-                  {
-                    id: "9eaa1c7dd4433f413c308ce2",
-                    category: "Homework 2",
-                    title: "Title",
-                    body: "abcabacacacacac abcabacacacacac abcabacacacacac abcabacacacacac",
-                  },
-                  {
-                    id: "01a5230c811bd04996ce7c13",
-                    category: "Homework 3",
-                    title: "Title",
-                    body: "abcabacacacacac abcabacacacacac abcabacacacacac abcabacacacacac",
-                  },
-                  {
-                    id: "1f4e1bd0a87cea23cdb83d18",
-                    category: "Homework 4",
-                    title: "Title",
-                    body: "abcabacacacacac abcabacacacacac abcabacacacacac abcabacacacacac",
-                  },
-                  {
-                    id: "9f974f239d29ede969367103",
-                    category: "Homework 5",
-                    title: "Title",
-                    body: "abcabacacacacac abcabacacacacac abcabacacacacac abcabacacacacac",
-                  },
-                  {
-                    id: "ffc83c1560ec2f66a1c05596",
-                    category: "Homework 6",
-                    title: "Title",
-                    body: "abcabacacacacac abcabacacacacac abcabacacacacac abcabacacacacac",
-                  },
-                ]}
-                sx={{ height: "100%" }}
-              />
+              <TrendingPosts orders={latestUnresolvedPosts} sx={{ height: "100%" }} />
             </Grid>
             <Grid xs={12} md={6} lg={4}>
-              <StudentLeaderboard products={props.contributors} sx={{ height: "100%" }} />
+              <StudentLeaderboard products={contributors} sx={{ height: "100%" }} />
             </Grid>
             <Grid xs={9} lg={9}>
               <CategoriesChart

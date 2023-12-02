@@ -15,11 +15,11 @@ function CalendarItem({
   value: Value;
   onChange: Dispatch<SetStateAction<Value>>;
 }) {
-  const startDate = new Date(2022, 8, 15);
+  const startDate = new Date(2022, 8, 5);
   const endDate = new Date(2022, 11, 15);
 
   /**
-   * Return a date of format //
+   * Return a date of format "MM/DD/YYYY" or "MM/DD/YYYY - MM/DD/YYYY" depending on whether a single date or a range of dates is selected
    * @returns string representation of the date(s) selected
    */
   const displayTime = () => {
