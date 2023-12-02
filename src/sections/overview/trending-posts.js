@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Fragment } from "react";
+import ReactDOM from "react-dom";
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 import ArrowRightIcon from "@heroicons/react/24/solid/ArrowRightIcon";
@@ -16,12 +16,12 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Collapse
-} from '@mui/material';
-import { Scrollbar } from 'src/components/scrollbar';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import IconButton from '@mui/material/IconButton';
+  Collapse,
+} from "@mui/material";
+import { Scrollbar } from "src/components/scrollbar";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import IconButton from "@mui/material/IconButton";
 
 const statusMap = {
   pending: "warning",
@@ -37,59 +37,43 @@ export const TrendingPosts = (props) => {
   return (
     <Card sx={sx}>
       <CardHeader title="Trending Posts" />
-        <Box sx={sx}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell>Category</TableCell>
-                <TableCell>Title</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orders.map((order, index) => {
-                return (
-                <>
-                  <TableRow
-                    hover 
-                    key = {order.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
+      <Box sx={sx}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>Category</TableCell>
+              <TableCell>Title</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {orders.map((order, index) => {
+              return (
+                <Fragment key={index}>
+                  <TableRow hover sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                     <TableCell>
-                      <IconButton
-                        size="small"
-                        onClick={() => setOpen(open===index ? -1 : index)}
-                      >
-                        {open===index ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                      <IconButton size="small" onClick={() => setOpen(open === index ? -1 : index)}>
+                        {open === index ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                       </IconButton>
-                    </TableCell>   
-                    <TableCell sx = {{textAlign: 'left'}} >{order.category}</TableCell>
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "left" }}>{order.category}</TableCell>
                     <TableCell>{order.title}</TableCell>
                   </TableRow>
-                  <TableRow> 
-                      <TableCell
-                        colSpan={5}
-                        sx = {{paddingBottom:0, paddingTop: 0}}
-                      >
-                        <Collapse 
-                        in={open===index} 
-                        timeout="auto" 
-                        unmountOnExit>
-                          <Box 
-                            sx = {{width: "100%"}} 
-                            minHeight = {65}
-                          >
-                            {order.body}
-                          </Box>
-                        </Collapse>
-                      </TableCell>
-                    </TableRow>
-                </>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Box>
+                  <TableRow>
+                    <TableCell colSpan={5} sx={{ paddingBottom: 0, paddingTop: 0 }}>
+                      <Collapse in={open === index} timeout="auto" unmountOnExit>
+                        <Box sx={{ width: "100%" }} minHeight={65}>
+                          {order.body}
+                        </Box>
+                      </Collapse>
+                    </TableCell>
+                  </TableRow>
+                </Fragment>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </Box>
       <Divider />
     </Card>
   );
