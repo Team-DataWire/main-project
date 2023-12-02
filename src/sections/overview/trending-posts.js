@@ -15,20 +15,19 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
+  Collapse
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
-import { Collapse } from '@mui/material';
 
 const statusMap = {
   pending: "warning",
   delivered: "success",
   refunded: "error",
 };
-
 
 //Trending posts table
 export const TrendingPosts = (props) => {
@@ -38,20 +37,19 @@ export const TrendingPosts = (props) => {
   return (
     <Card sx={sx}>
       <CardHeader title="Trending Posts" />
-      <Scrollbar sx={{ flexGrow: 1 }}>
-        <Box sx={{ minWidth: 800 }}>
+        <Box sx={sx}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell />
                 <TableCell>Category</TableCell>
                 <TableCell>Title</TableCell>
-                <TableCell>Body</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {orders.map((order, index) => {
                 return (
+                <>
                   <TableRow
                     hover 
                     key = {order.id}
@@ -59,23 +57,39 @@ export const TrendingPosts = (props) => {
                   >
                     <TableCell>
                       <IconButton
-                        aria-label="expand row"
                         size="small"
                         onClick={() => setOpen(open===index ? -1 : index)}
                       >
                         {open===index ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                       </IconButton>
                     </TableCell>   
-                    <TableCell>{order.category}</TableCell>
+                    <TableCell sx = {{textAlign: 'left'}} >{order.category}</TableCell>
                     <TableCell>{order.title}</TableCell>
-                    <TableCell>{order.body}</TableCell>
                   </TableRow>
+                  <TableRow> 
+                      <TableCell
+                        colSpan={5}
+                        sx = {{paddingBottom:0, paddingTop: 0}}
+                      >
+                        <Collapse 
+                        in={open===index} 
+                        timeout="auto" 
+                        unmountOnExit>
+                          <Box 
+                            sx = {{width: "100%"}} 
+                            minHeight = {65}
+                          >
+                            {order.body}
+                          </Box>
+                        </Collapse>
+                      </TableCell>
+                    </TableRow>
+                </>
                 );
               })}
             </TableBody>
           </Table>
         </Box>
-      </Scrollbar>
       <Divider />
     </Card>
   );
