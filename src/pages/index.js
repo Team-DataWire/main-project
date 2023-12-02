@@ -16,6 +16,7 @@ import BellIcon from "@heroicons/react/24/solid/BellIcon";
 import { useState, useEffect } from "react";
 import CalendarItem from "../components/calendar";
 
+
 const Page = () => {
   const [date, setDate] = useState(new Date(2022, 8, 5));
   const [contributors, setContributors] = useState([]);

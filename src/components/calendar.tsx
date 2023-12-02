@@ -44,6 +44,9 @@ function CalendarItem({
         maxDetail="month" // sets the maximum detail that can be displayed (month)
         view="month" // sets the default view of the calendar (month)
       />
+      <button className="flex justify-center" onClick={() => onChange([startDate, endDate])}>
+        All-Time
+      </button>
     </div>
   );
 }
