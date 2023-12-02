@@ -14,7 +14,7 @@ import {
   SvgIcon,
 } from "@mui/material";
 
-export const OverviewLatestProducts = (props) => {
+export const StudentLeaderboard = (props) => {
   const { products = [], sx } = props;
   const trophies = [
     "/assets/products/trophy.png",
@@ -75,7 +75,7 @@ export const OverviewLatestProducts = (props) => {
   );
 };
 
-OverviewLatestProducts.propTypes = {
+StudentLeaderboard.propTypes = {
   products: PropTypes.array,
   sx: PropTypes.object,
 };
