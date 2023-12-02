@@ -32,15 +32,15 @@ export const getServerSideProps = async () => {
 };
 
 const Page = (props) => {
-  const [date1, setDate1] = useState(new Date(2022, 8, 5));
-  const [date2, setDate2] = useState(new Date(2022, 11, 20));
+  const [date, setDate] = useState(new Date(2022, 8, 5));
+  
   
   return (
     <>
       <Head>
         <title>Campuswire Analytics</title>
       </Head>
-      <CalendarItem />
+      <CalendarItem value={date} onChange={setDate}/>
       <Box
         component="main"
         sx={{
