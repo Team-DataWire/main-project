@@ -28,10 +28,9 @@ export const StudentLeaderboard = (props) => {
       <List>
         {products.map((product, index) => {
           const hasDivider = index < products.length - 1;
-
+          if (product.totalCount === 0) return null;
           return (
-            <ListItem divider={hasDivider} 
-              key={index}>
+            <ListItem divider={hasDivider} key={index}>
               <ListItemAvatar>
                 {index < 3 ? (
                   <Box
