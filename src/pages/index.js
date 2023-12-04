@@ -17,7 +17,7 @@ import { useState, useEffect } from "react";
 import CalendarItem from "../components/calendar";
 
 const Page = () => {
-  const [date, setDate] = useState(new Date(2022, 8, 5));
+  const [date, setDate] = useState([new Date(2022, 8, 5), new Date(2022, 11, 15)]);
   const [contributors, setContributors] = useState([]);
   const [latestUnresolvedPosts, setLatestUnresolvedPosts] = useState([]);
   const [dayPosts, setDayPosts] = useState({
