@@ -1,5 +1,8 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import IconButton from "@mui/material/IconButton";
 import {
   Box,
   Card,
@@ -11,11 +14,8 @@ import {
   TableHead,
   TableRow,
   Collapse,
+  TableContainer
 } from "@mui/material";
-import { Scrollbar } from "src/components/scrollbar";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import IconButton from "@mui/material/IconButton";
 
 const statusMap = {
   pending: "warning",
@@ -32,13 +32,14 @@ export const TrendingPosts = (props) => {
     <Card sx={sx}>
       <CardHeader title={title} />
       <Box sx={sx}>
-        <Table>
+      <TableContainer sx={{height: 300}}> 
+        <Table sx={{height: "max-content"}}>
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell>Category</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell width="5%"></TableCell>
+              <TableCell align="left">Category</TableCell>
+              <TableCell align="left">Title</TableCell>
+              <TableCell aligh="left">Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -58,7 +59,7 @@ export const TrendingPosts = (props) => {
                   <TableRow>
                     <TableCell colSpan={5} sx={{ paddingBottom: 0, paddingTop: 0 }}>
                       <Collapse in={open === index} timeout="auto" unmountOnExit>
-                        <Box sx={{ width: "100%" }} minHeight={65}>
+                        <Box sx={{ width: "100%" }} minHeight={65} m={2}>
                           {post.body}
                         </Box>
                       </Collapse>
@@ -69,6 +70,7 @@ export const TrendingPosts = (props) => {
             })}
           </TableBody>
         </Table>
+        </TableContainer>
       </Box>
       <Divider />
     </Card>
