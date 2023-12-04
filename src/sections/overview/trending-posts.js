@@ -5,12 +5,9 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import IconButton from "@mui/material/IconButton";
 import {
   Box,
-  Button,
   Card,
-  CardActions,
   CardHeader,
   Divider,
-  SvgIcon,
   Table,
   TableBody,
   TableCell,
@@ -28,12 +25,12 @@ const statusMap = {
 
 //Trending posts table
 export const TrendingPosts = (props) => {
-  const { orders = [], sx } = props;
+  const { posts = [], sx, title } = props;
   const [open, setOpen] = React.useState(false);
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Trending Posts"/>
+      <CardHeader title={title} />
       <Box sx={sx}>
       <TableContainer sx={{height: 300}}> 
         <Table sx={{height: "max-content"}}>
@@ -42,10 +39,11 @@ export const TrendingPosts = (props) => {
               <TableCell width="5%"></TableCell>
               <TableCell align="left">Category</TableCell>
               <TableCell align="left">Title</TableCell>
+              <TableCell aligh="left">Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders.map((order, index) => {
+            {posts.map((post, index) => {
               return (
                 <Fragment key={index}>
                   <TableRow hover sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -54,14 +52,15 @@ export const TrendingPosts = (props) => {
                         {open === index ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                       </IconButton>
                     </TableCell>
-                    <TableCell sx={{ textAlign: "left" }}>{order.category}</TableCell>
-                    <TableCell>{order.title}</TableCell>
+                    <TableCell sx={{ textAlign: "left" }}>{post.category}</TableCell>
+                    <TableCell>{post.title}</TableCell>
+                    <TableCell>{(new Date(post.publishedAt)).toDateString()}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell colSpan={5} sx={{ paddingBottom: 0, paddingTop: 0 }}>
                       <Collapse in={open === index} timeout="auto" unmountOnExit>
                         <Box sx={{ width: "100%" }} minHeight={65} m={2}>
-                          {order.body}
+                          {post.body}
                         </Box>
                       </Collapse>
                     </TableCell>
@@ -79,6 +78,6 @@ export const TrendingPosts = (props) => {
 };
 
 TrendingPosts.prototype = {
-  orders: PropTypes.array,
+  posts: PropTypes.array,
   sx: PropTypes.object,
 };

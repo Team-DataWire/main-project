@@ -87,16 +87,19 @@ const getTopContributors = async (
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { date } = req.query;
 
+  // handle the date range
   if (date) {
     if (typeof date === "string") {
       const dateArray = date.split(",");
       if (dateArray.length === 2) {
+        // if there are two dates, use the first as the start date and the second as the end date
         const startDate = new Date(dateArray[0]);
         const endDate = new Date(dateArray[1]);
         const contributors = await getTopContributors(startDate, endDate);
         res.json(contributors);
       } else {
-        const dateObj = new Date(date.split(",")[0]);
+        // if there is only one date, use it as both the start and end date
+        const dateObj = new Date(date);
         const contributors = await getTopContributors(dateObj, dateObj);
         res.json(contributors);
       }

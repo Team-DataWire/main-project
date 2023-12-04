@@ -13,7 +13,7 @@ import {
 import { alpha, useTheme } from '@mui/material/styles';
 import { Chart } from 'src/components/chart';
 
-const useChartOptions = () => {
+const useChartOptions = (labels) => {
   const theme = useTheme();
 
   return {
@@ -71,14 +71,7 @@ const useChartOptions = () => {
         color: theme.palette.divider,
         show: true
       },
-      categories: [
-        'Homework 1',
-        'Homework 2',
-        'Homework 3',
-        'Homework 4',
-        'Homework 5',
-        'Homework 6',
-      ],
+      categories: labels,
       labels: {
         offsetY: 5,
         style: {
@@ -98,13 +91,13 @@ const useChartOptions = () => {
 };
 
 export const CategoriesChart = (props) => {
-  const { chartSeries, sx } = props;
-  const chartOptions = useChartOptions();
+  const { chartSeries, sx, title, labels } = props;
+  const chartOptions = useChartOptions(labels);
 
   return (
     <Card sx={sx}>
       <CardHeader
-        title="Posts by Category"
+        title={title}
       />
       <CardContent>
         <Chart
