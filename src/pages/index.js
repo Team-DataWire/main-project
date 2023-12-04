@@ -16,11 +16,19 @@ import BellIcon from "@heroicons/react/24/solid/BellIcon";
 import { useState, useEffect } from "react";
 import CalendarItem from "../components/calendar";
 
-
 const Page = () => {
   const [date, setDate] = useState(new Date(2022, 8, 5));
   const [contributors, setContributors] = useState([]);
   const [latestUnresolvedPosts, setLatestUnresolvedPosts] = useState([]);
+  const [dayPosts, setDayPosts] = useState({
+    Monday: 0,
+    Tuesday: 0,
+    Wednesday: 0,
+    Thursday: 0,
+    Friday: 0,
+    Saturday: 0,
+    Sunday: 0,
+  });
 
   useEffect(() => {
     const fetchContributors = async () => {
@@ -35,8 +43,14 @@ const Page = () => {
       setLatestUnresolvedPosts(posts);
     };
 
+    const fetchDayPosts = async () => {
+      const posts = await fetch(`/api/dayPosts?date=${date}`).then((res) => res.json());
+      setDayPosts(posts);
+    };
+
     fetchContributors();
     fetchLatestUnresolvedPosts();
+    fetchDayPosts();
   }, [date]);
 
   return (
@@ -46,7 +60,7 @@ const Page = () => {
       </Head>
       <Container maxWidth="xl">
         <Grid xs={12} md={6} lg={4}>
-          <CalendarItem value={date} onChange={setDate}/>
+          <CalendarItem value={date} onChange={setDate} />
         </Grid>
       </Container>
       <Box
@@ -79,11 +93,15 @@ const Page = () => {
         </Box>
         <Container maxWidth="xl">
           <Grid xs={6} md={6} lg={6}>
-            <TrendingPosts orders={[]} sx={{ height: "100%" }} />
+            <TrendingPosts posts={[]} sx={{ height: "100%" }} title={"Trending Posts"} />
           </Grid>
           <Grid xs={12} md={12} lg={8}>
             <Grid xs={6} md={6} lg={6}>
-              <TrendingPosts orders={latestUnresolvedPosts} sx={{ height: "100%" }} />
+              <TrendingPosts
+                posts={latestUnresolvedPosts}
+                sx={{ height: "100%" }}
+                title={"Unresolved Posts"}
+              />
             </Grid>
             <Grid xs={12} md={6} lg={4}>
               <StudentLeaderboard products={contributors} sx={{ height: "100%" }} />
@@ -97,6 +115,38 @@ const Page = () => {
                   },
                 ]}
                 sx={{ height: "100%" }}
+                title={"Posts by Category"}
+                labels={[
+                  "Course Logistics",
+                  "HW 1",
+                  "HW 2",
+                  "HW 3",
+                  "HW 4",
+                  "HW 5",
+                  "HW 6",
+                  "Final Exam",
+                ]}
+              />
+            </Grid>
+            <Grid xs={9} lg={9}>
+              <CategoriesChart
+                chartSeries={[
+                  {
+                    name: "Num Posts",
+                    data: Object.values(dayPosts),
+                  },
+                ]}
+                sx={{ height: "100%" }}
+                title={"Posts by Day of Week"}
+                labels={[
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday",
+                ]}
               />
             </Grid>
           </Grid>
