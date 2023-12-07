@@ -70,27 +70,6 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Box sx={{ position: "fixed", top: 20, right: 20, zIndex: 1000 }}>
-          <Tooltip title="Urgent Questions">
-            <IconButton
-              onClick={() => {
-                alert("clicked");
-              }}
-            >
-              <Badge
-                badgeContent={2}
-                color="primary"
-                sx={{
-                  "& .MuiBadge-badge": { height: 30, minWidth: 30, borderRadius: 10, fontSize: 20 },
-                }}
-              >
-                <SvgIcon sx={{ fontSize: 50 }}>
-                  <BellIcon />
-                </SvgIcon>
-              </Badge>
-            </IconButton>
-          </Tooltip>
-        </Box>
         <Container maxWidth="xl">
           <Grid xs={6} md={6} lg={6}>
             <TrendingPosts posts={[]} sx={{ height: "100%" }} title={"Trending Posts"} />
