@@ -14,7 +14,10 @@ import { useState, useEffect } from "react";
 import CalendarItem from "../components/calendar";
 
 const Page = () => {
+  // global date variable assigned to the calendar element
   const [date, setDate] = useState([new Date(2022, 8, 5), new Date(2022, 11, 15)]);
+
+  // state variables for the dashboard
   const [contributors, setContributors] = useState([]);
   const [latestUnresolvedPosts, setLatestUnresolvedPosts] = useState([]);
   const [dayPosts, setDayPosts] = useState({
@@ -27,7 +30,13 @@ const Page = () => {
     Sunday: 0,
   });
 
+  /**
+   * Run all the fetching functions on page load
+   * and whenever the date is updated from user
+   * interaction on the calendar
+   */
   useEffect(() => {
+    // fetches the top 3 contributors for the given date
     const fetchContributors = async () => {
       const contributors = await fetch(`/api/topContributors?date=${date}`).then((res) =>
         res.json()
@@ -35,11 +44,13 @@ const Page = () => {
       setContributors(contributors);
     };
 
+    // fetches the latest unresolved posts for the given date
     const fetchLatestUnresolvedPosts = async () => {
       const posts = await fetch(`/api/latestUnresolved?date=${date}`).then((res) => res.json());
       setLatestUnresolvedPosts(posts);
     };
 
+    // fetches the number of posts for each day of the week for the given date
     const fetchDayPosts = async () => {
       const posts = await fetch(`/api/dayPosts?date=${date}`).then((res) => res.json());
       setDayPosts(posts);
