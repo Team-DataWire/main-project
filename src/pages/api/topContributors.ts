@@ -1,21 +1,6 @@
-/**
- * top contributors client file to get Data
- * from Supabase to solve the top contributor
- * question for the front-end
- */
 import prisma from "../../typescript/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-/**
- * returns a JSON list of contributors with the following shape:
- * [
- *  {
- *    slug: string,
- *    totalCount: number
- *  }
- * ...
- * ]
- */
 interface Author {
   slug: string;
   totalCount: number;
@@ -34,6 +19,10 @@ const getTopContributors = async (
   count: number = 3 // Default number of contributors to return
 ): Promise<AuthorInfo[]> => {
   try {
+    /**
+     * get the top contributors by the number of posts, comments, and last messages
+     * they sent over the given date range
+     */
     const authors = (
       (await prisma.$queryRaw`
       SELECT a.slug, 
@@ -51,7 +40,7 @@ const getTopContributors = async (
       ORDER BY "totalCount" DESC
       LIMIT ${count}
     `) as Author[]
-    ).map(async (author: Author) => {
+    ).map(async (author: Author) => { // map to AuthorInfo interface
       const authorInfo = await prisma.author.findUnique({
         where: {
           slug: author.slug,
@@ -61,6 +50,7 @@ const getTopContributors = async (
           lastName: true,
         },
       });
+      // if the author exists, return the author info
       if (authorInfo) {
         return {
           slug: author.slug,
@@ -69,6 +59,7 @@ const getTopContributors = async (
           totalCount: Number(author.totalCount),
         };
       }
+      // else return an empty string for the first and last name
       return {
         slug: author.slug,
         firstName: "",
@@ -83,7 +74,7 @@ const getTopContributors = async (
   }
 };
 
-// API handler function
+// API handler function for next.js routing
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { date } = req.query;
 

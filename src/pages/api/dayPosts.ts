@@ -1,6 +1,7 @@
 import prisma from "../../typescript/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
+// return data corresponding to each day of the week
 interface PostData {
   Monday: number;
   Tuesday: number;
@@ -43,7 +44,9 @@ const getDayPosts = async (
         publishedAt: true,
       },
     });
-    posts.forEach((post) => {
+    // for each post, add one to the day of the week it was published
+    // to the respective `res` object key
+    posts.forEach((post: { publishedAt: Date }) => {
       const day = post.publishedAt.getDay();
       switch (day) {
         case 0:
@@ -76,7 +79,7 @@ const getDayPosts = async (
   }
 };
 
-// API handler function
+// API handler function for next.js routing
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { date } = req.query;
 

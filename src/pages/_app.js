@@ -1,3 +1,8 @@
+/** 
+ * define the layout of the application in the _app.js file.
+ * This file is used to initialize pages in the application.
+ */
+
 import Head from "next/head";
 import { CacheProvider } from "@emotion/react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -30,7 +35,7 @@ const App = (props) => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Component {...pageProps} />{" "}
+          <Component {...pageProps} />{" "} {/** render each specific page with ...pageProps */}
         </ThemeProvider>
       </LocalizationProvider>
     </CacheProvider>
