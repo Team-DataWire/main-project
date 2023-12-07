@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import Calendar from "react-calendar";
 
-import "react-calendar/dist/Calendar2.css"; // import default CSS styling of calendar component
+import "react-calendar/dist/Calendar.css"; // import default CSS styling of calendar component
 
 // basic starter code from https://github.com/wojtekmaj/react-calendar/blob/main/packages/react-calendar/README.md
 type ValuePiece = Date | null;
