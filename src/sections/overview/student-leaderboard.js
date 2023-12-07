@@ -17,9 +17,9 @@ import {
 export const StudentLeaderboard = (props) => {
   const { products = [], sx } = props;
   const trophies = [
-    "/assets/products/trophy.png",
-    "/assets/products/silver.png",
-    "/assets/products/bronze.png",
+    "/assets/leaderboard-pictures/trophy.png",
+    "/assets/leaderboard-pictures/silver.png",
+    "/assets/leaderboard-pictures/bronze.png",
   ];
 
   return (
@@ -59,11 +59,6 @@ export const StudentLeaderboard = (props) => {
                 secondary={`Number of posts: ${product.totalCount}`}
                 secondaryTypographyProps={{ variant: "body2" }}
               />
-              <IconButton edge="end">
-                <SvgIcon>
-                  <EllipsisVerticalIcon />
-                </SvgIcon>
-              </IconButton>
             </ListItem>
           );
         })}
