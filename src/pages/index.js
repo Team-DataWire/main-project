@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { TrendingPosts } from "src/sections/overview/trending-posts";
+import { Posts } from "src/sections/overview/posts";
 import { StudentLeaderboard } from "src/sections/overview/student-leaderboard";
 import { CategoriesChart } from "src/sections/overview/post-categories-chart";
 import Typography from '@mui/material/Typography';
@@ -78,11 +78,11 @@ const Page = () => {
       >
         <Container maxWidth="xl">
           <Grid xs={6} md={6} lg={6}>
-            <TrendingPosts posts={[]} sx={{ height: "100%" }} title={"Trending Posts"} />
+            <Posts posts={[]} sx={{ height: "100%" }} title={"Trending Posts"} />
           </Grid>
           <Grid xs={12} md={12} lg={8}>
             <Grid xs={6} md={6} lg={6}>
-              <TrendingPosts
+              <Posts
                 posts={latestUnresolvedPosts}
                 sx={{ height: "100%" }}
                 title={"Unresolved Posts"}
