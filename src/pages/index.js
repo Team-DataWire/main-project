@@ -3,16 +3,17 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { TrendingPosts } from "src/sections/overview/trending-posts";
 import { StudentLeaderboard } from "src/sections/overview/student-leaderboard";
 import { CategoriesChart } from "src/sections/overview/post-categories-chart";
+import Typography from '@mui/material/Typography';
 import {
   Box,
   Badge,
   Container,
   IconButton,
+  Stack,
   SvgIcon,
   Tooltip,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
-import BellIcon from "@heroicons/react/24/solid/BellIcon";
 import { useState, useEffect } from "react";
 import CalendarItem from "../components/calendar";
 
@@ -60,8 +61,17 @@ const Page = () => {
       </Head>
       <Container maxWidth="xl">
         <Grid xs={12} md={6} lg={4}>
-          <CalendarItem value={date} onChange={setDate} />
+          <Typography variant="h1">
+            Welcome to Campuswire Analytics!
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            Built by Team DataWire
+          </Typography>
         </Grid>
+        <Stack direction="row" spacing={10} alignItems="center" useFlexGap flexWrap="wrap">
+          <CalendarItem value={date} onChange={setDate} />
+          <StudentLeaderboard products={contributors} sx={{height: "100%", minWidth: '60%'}} />
+        </Stack>
       </Container>
       <Box
         component="main"
@@ -81,9 +91,6 @@ const Page = () => {
                 sx={{ height: "100%" }}
                 title={"Unresolved Posts"}
               />
-            </Grid>
-            <Grid xs={12} md={6} lg={4}>
-              <StudentLeaderboard products={contributors} sx={{ height: "100%" }} />
             </Grid>
             <Grid xs={9} lg={9}>
               <CategoriesChart
