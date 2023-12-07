@@ -1,18 +1,15 @@
 import Head from "next/head";
-import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { TrendingPosts } from "src/sections/overview/trending-posts";
-import { StudentLeaderboard } from "src/sections/overview/student-leaderboard";
-import { CategoriesChart } from "src/sections/overview/post-categories-chart";
+import { Layout as DashboardLayout } from "src/theme/layout";
+import { Posts } from "src/sections/posts";
+import { StudentLeaderboard } from "src/sections/student-leaderboard";
+import { CategoriesChart } from "src/sections/post-categories-chart";
+import Typography from '@mui/material/Typography';
 import {
   Box,
-  Badge,
   Container,
-  IconButton,
-  SvgIcon,
-  Tooltip,
+  Stack,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
-import BellIcon from "@heroicons/react/24/solid/BellIcon";
 import { useState, useEffect } from "react";
 import CalendarItem from "../components/calendar";
 
@@ -60,8 +57,17 @@ const Page = () => {
       </Head>
       <Container maxWidth="xl">
         <Grid xs={12} md={6} lg={4}>
-          <CalendarItem value={date} onChange={setDate} />
+          <Typography variant="h1">
+            Welcome to Campuswire Analytics!
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            Built by Team DataWire
+          </Typography>
         </Grid>
+        <Stack direction="row" spacing={10} alignItems="center" useFlexGap flexWrap="wrap">
+          <CalendarItem value={date} onChange={setDate} />
+          <StudentLeaderboard products={contributors} sx={{height: "100%", minWidth: '60%'}} />
+        </Stack>
       </Container>
       <Box
         component="main"
@@ -70,41 +76,17 @@ const Page = () => {
           py: 8,
         }}
       >
-        <Box sx={{ position: "fixed", top: 20, right: 20, zIndex: 1000 }}>
-          <Tooltip title="Urgent Questions">
-            <IconButton
-              onClick={() => {
-                alert("clicked");
-              }}
-            >
-              <Badge
-                badgeContent={2}
-                color="primary"
-                sx={{
-                  "& .MuiBadge-badge": { height: 30, minWidth: 30, borderRadius: 10, fontSize: 20 },
-                }}
-              >
-                <SvgIcon sx={{ fontSize: 50 }}>
-                  <BellIcon />
-                </SvgIcon>
-              </Badge>
-            </IconButton>
-          </Tooltip>
-        </Box>
         <Container maxWidth="xl">
           <Grid xs={6} md={6} lg={6}>
-            <TrendingPosts posts={[]} sx={{ height: "100%" }} title={"Trending Posts"} />
+            <Posts posts={[]} sx={{ height: "100%" }} title={"Trending Posts"} />
           </Grid>
           <Grid xs={12} md={12} lg={8}>
             <Grid xs={6} md={6} lg={6}>
-              <TrendingPosts
+              <Posts
                 posts={latestUnresolvedPosts}
                 sx={{ height: "100%" }}
                 title={"Unresolved Posts"}
               />
-            </Grid>
-            <Grid xs={12} md={6} lg={4}>
-              <StudentLeaderboard products={contributors} sx={{ height: "100%" }} />
             </Grid>
             <Grid xs={9} lg={9}>
               <CategoriesChart

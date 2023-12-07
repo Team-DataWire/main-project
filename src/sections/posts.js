@@ -24,7 +24,7 @@ const statusMap = {
 };
 
 //Trending posts table
-export const TrendingPosts = (props) => {
+export const Posts = (props) => {
   const { posts = [], sx, title } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -77,7 +77,7 @@ export const TrendingPosts = (props) => {
   );
 };
 
-TrendingPosts.prototype = {
+Posts.prototype = {
   posts: PropTypes.array,
   sx: PropTypes.object,
 };
