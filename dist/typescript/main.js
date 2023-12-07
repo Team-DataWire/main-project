@@ -1,3 +1,3 @@
+"use strict";
 // import getData from "./data/fetchData";
-
-console.log("hello world")
+console.log("hello world");
