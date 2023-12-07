@@ -26,7 +26,7 @@ interface Post {
  * @param count
  * @returns Promise of returned Post[]
  */
-const getLatestUnresolved = async (
+export const getLatestUnresolved = async (
   startDate: Date = new Date(2022, 8, 5),
   endDate: Date = new Date(2022, 11, 15),
   count: number = 10

@@ -1,5 +1,5 @@
 {
-  "name": "material-kit-react",
+  "name": "datawire-campus-analytics",
   "version": "3.0.0",
   "author": "Devias",
   "licence": "MIT",
@@ -11,7 +11,8 @@
     "start": "next start",
     "export": "next export",
     "lint": "next lint",
-    "lint-fix": "next lint --fix"
+    "lint-fix": "next lint --fix",
+    "test": "jest"
   },
   "dependencies": {
     "@emotion/cache": "11.10.5",
@@ -42,6 +43,7 @@
     "yup": "1.0.0"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@types/node": "18.13.0",
     "@types/nprogress": "0.2.0",
     "@types/numeral": "2.0.2",
@@ -51,6 +53,7 @@
     "@typescript-eslint/parser": "^6.10.0",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "jest": "^29.7.0",
     "ts-node": "^10.9.1",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"
