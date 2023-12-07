@@ -1,8 +1,8 @@
 import Head from "next/head";
-import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { Posts } from "src/sections/overview/posts";
-import { StudentLeaderboard } from "src/sections/overview/student-leaderboard";
-import { CategoriesChart } from "src/sections/overview/post-categories-chart";
+import { Layout as DashboardLayout } from "src/theme/layout";
+import { Posts } from "src/sections/posts";
+import { StudentLeaderboard } from "src/sections/student-leaderboard";
+import { CategoriesChart } from "src/sections/post-categories-chart";
 import Typography from '@mui/material/Typography';
 import {
   Box,
