@@ -1,5 +1,4 @@
 import prisma from "../prisma";
-import { Post } from ".prisma/client";
 
 interface PostData {
   slug: string;

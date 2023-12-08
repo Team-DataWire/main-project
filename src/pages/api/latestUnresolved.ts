@@ -2,6 +2,7 @@ import prisma from "../../typescript/prisma";
 import data from "../../typescript/categories";
 import { NextApiRequest, NextApiResponse } from "next";
 
+// define the Post type as an interface when returning data from the database
 interface PostData {
   slug: string;
   title: string;
@@ -11,12 +12,21 @@ interface PostData {
   publishedAt: Date;
 }
 
+// interface for the post data returned from the database
+interface Post {
+  slug: string;
+  title: string;
+  body: string;
+  categoryId: string;
+  publishedAt: Date;
+}
+
 /**
  * @description Get latest unresolved posts
  * @param count
  * @returns Promise of returned Post[]
  */
-const getLatestUnresolved = async (
+export const getLatestUnresolved = async (
   startDate: Date = new Date(2022, 8, 5),
   endDate: Date = new Date(2022, 11, 15),
   count: number = 10
@@ -39,7 +49,6 @@ const getLatestUnresolved = async (
           ],
           // we want posts with no comments, where the answeredAt field is null
           answeredAt: null,
-          
         },
         take: count,
         orderBy: {
@@ -54,8 +63,9 @@ const getLatestUnresolved = async (
           publishedAt: true,
         },
       })
-      .then((posts) =>
-        posts.map((post) => ({
+      // map the posts to include the category name, to the PostData interface
+      .then((posts: Post[]) =>
+        posts.map((post: Post) => ({
           ...post,
           category: data[post.categoryId],
         }))
@@ -67,7 +77,7 @@ const getLatestUnresolved = async (
   }
 };
 
-// API handler function
+// API handler function for next.js routing
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { date } = req.query;
 
