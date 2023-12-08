@@ -61,13 +61,15 @@ const Page = () => {
     fetchDayPosts();
   }, [date]);
 
+  // Creating and formatting all webpage features.
   return (
     <>
       <Head>
-        <title>Campuswire Analytics</title>
+        <title>Campuswire Analytics</title> {/*Set name of website as appears in browser tabs*/}
       </Head>
       <Container maxWidth="xl">
-        <Grid xs={12} md={6} lg={4}>
+        {/*Grid which stores Welcome texts and displays them on top of each other*/}
+        <Grid xs={12} md={6} lg={4}> 
           <Typography variant="h1">
             Welcome to Campuswire Analytics!
           </Typography>
@@ -75,9 +77,10 @@ const Page = () => {
             Built by Team DataWire
           </Typography>
         </Grid>
-        <Stack direction="row" spacing={10} alignItems="center" useFlexGap flexWrap="wrap">
-          <CalendarItem value={date} onChange={setDate} />
-          <StudentLeaderboard products={contributors} sx={{height: "100%", minWidth: '60%'}} />
+        {/*Stack component stores Date Picker and Student Leaderboard to display them side by side*/}
+        <Stack direction="row" spacing={10} alignItems="center" useFlexGap flexWrap="wrap"> 
+          <CalendarItem value={date} onChange={setDate} /> {/*Date Picker Feature*/}
+          <StudentLeaderboard products={contributors} sx={{height: "100%", minWidth: '60%'}} /> {/*Student Leaderboard Feature*/}
         </Stack>
       </Container>
       <Box
@@ -89,17 +92,23 @@ const Page = () => {
       >
         <Container maxWidth="xl">
           <Grid xs={6} md={6} lg={6}>
-            <Posts posts={[]} sx={{ height: "100%" }} title={"Trending Posts"} />
+            {/*Creating and formatting Unresolved Posts Feature*/}
+            {/*Access state var to get the most trending posts within the current date range*/}
+            <Posts posts={[]} sx={{ height: "100%" }} title={"Trending Posts"} /> 
           </Grid>
           <Grid xs={12} md={12} lg={8}>
             <Grid xs={6} md={6} lg={6}>
+              {/*Creating and formatting Unresolved Posts Feature*/}
+              {/*Access state var to get latest unresolved posts within the current date range*/}
               <Posts
                 posts={latestUnresolvedPosts}
                 sx={{ height: "100%" }}
                 title={"Unresolved Posts"}
-              />
+              /> 
             </Grid>
             <Grid xs={9} lg={9}>
+              {/*Creating and formatting Posts by Category Graph*/}
+              {/*Get data by accessing state variables*/}
               <CategoriesChart
                 chartSeries={[
                   {
@@ -122,6 +131,8 @@ const Page = () => {
               />
             </Grid>
             <Grid xs={9} lg={9}>
+              {/*Creating and formatting Posts by Day of Week Graph*/}
+              {/*Get data by accessing state variables*/}
               <CategoriesChart
                 chartSeries={[
                   {
@@ -149,6 +160,7 @@ const Page = () => {
   );
 };
 
+//Apply layout.js formatting to the page
 Page.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Page;
