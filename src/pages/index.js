@@ -29,6 +29,17 @@ const Page = () => {
     Saturday: 0,
     Sunday: 0,
   });
+  const [categories, setCategories] = useState({
+    "Course Logistics": 0,
+    "HW 1": 0,
+    "HW 2": 0,
+    "HW 3": 0,
+    "HW 4": 0,
+    "HW 5": 0,
+    "HW 6": 0,
+    "Final Exam": 0,
+  });
+  const [topPosts, setTopPosts] = useState([]);
 
   /**
    * Run all the fetching functions on page load
@@ -56,9 +67,23 @@ const Page = () => {
       setDayPosts(posts);
     };
 
+    // fetches the categories and number of posts for that category for the given date
+    const fetchCategories = async () => {
+      const categories = await fetch(`/api/categories?date=${date}`).then((res) => res.json());
+      setCategories(categories);
+    };
+
+    // fetches the top posts for the given date
+    const fetchTopPosts = async () => {
+      const posts = await fetch(`/api/topPosts?date=${date}`).then((res) => res.json());
+      setTopPosts(posts);
+    };
+
     fetchContributors();
     fetchLatestUnresolvedPosts();
     fetchDayPosts();
+    fetchCategories();
+    fetchTopPosts();
   }, [date]);
 
   // Creating and formatting all webpage features.
@@ -99,7 +124,7 @@ const Page = () => {
               {/*Creating and formatting Unresolved Posts Feature*/}
               {/*Access state var to get the most trending posts within the current date range*/}
               <Posts 
-                posts={[]} 
+                posts={topPosts} 
                 sx={{ height: "100%" }} 
                 title={"Trending Posts"} 
               /> 
@@ -119,8 +144,8 @@ const Page = () => {
               <CategoriesChart
                 chartSeries={[
                   {
-                    name: "Data",
-                    data: [18, 16, 5, 8, 3, 14],
+                    name: "Num Posts",
+                    data: Object.values(categories),
                   },
                 ]}
                 sx={{ height: "100%" }}
