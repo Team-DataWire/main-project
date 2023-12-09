@@ -16,6 +16,7 @@ import {
 
 export const StudentLeaderboard = (props) => {
   const { products = [], sx } = props;
+  // Images for first, second, and third place
   const trophies = [
     "/assets/leaderboard-pictures/trophy.png",
     "/assets/leaderboard-pictures/silver.png",
@@ -33,6 +34,7 @@ export const StudentLeaderboard = (props) => {
             <ListItem divider={hasDivider} key={index}>
               <ListItemAvatar>
                 {index < 3 ? (
+                  // Creates the component box for the top 3 contributors
                   <Box
                     component="img"
                     src={trophies[index]}
@@ -54,8 +56,10 @@ export const StudentLeaderboard = (props) => {
                 )}
               </ListItemAvatar>
               <ListItemText
+                // Displays first and last name of each contributor
                 primary={`${product.firstName} ${product.lastName}`}
                 primaryTypographyProps={{ variant: "subtitle1" }}
+                // Displays number of posts for each contributor
                 secondary={`Number of posts: ${product.totalCount}`}
                 secondaryTypographyProps={{ variant: "body2" }}
               />
