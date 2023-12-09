@@ -9,7 +9,7 @@ interface PostData {
   body: string;
   categoryId: string;
   category: string;
-  publishedAt: Date;
+  createdAt: Date;
 }
 
 // interface for the post data returned from the database
@@ -18,7 +18,7 @@ interface Post {
   title: string;
   body: string;
   categoryId: string;
-  publishedAt: Date;
+  createdAt: Date;
 }
 
 /**
@@ -60,7 +60,7 @@ export const getLatestUnresolved = async (
           body: true,
           slug: true,
           categoryId: true,
-          publishedAt: true,
+          createdAt: true,
         },
       })
       // map the posts to include the category name, to the PostData interface

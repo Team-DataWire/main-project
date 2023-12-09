@@ -74,6 +74,8 @@ const getTopContributors = async (
   }
 };
 
+export { getTopContributors };
+
 // API handler function for next.js routing
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { date } = req.query;

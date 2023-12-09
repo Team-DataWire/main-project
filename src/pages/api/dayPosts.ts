@@ -79,6 +79,8 @@ const getDayPosts = async (
   }
 };
 
+export { getDayPosts };
+
 // API handler function for next.js routing
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { date } = req.query;
