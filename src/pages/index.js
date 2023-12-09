@@ -73,14 +73,17 @@ const Page = () => {
           <Typography variant="h1">
             Welcome to Campuswire Analytics!
           </Typography>
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             Built by Team DataWire
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Select a date range to begin!
           </Typography>
         </Grid>
         {/*Stack component stores Date Picker and Student Leaderboard to display them side by side*/}
         <Stack direction="row" spacing={10} alignItems="center" useFlexGap flexWrap="wrap"> 
           <CalendarItem value={date} onChange={setDate} /> {/*Date Picker Feature*/}
-          <StudentLeaderboard products={contributors} sx={{height: "100%", minWidth: '60%'}} /> {/*Student Leaderboard Feature*/}
+          <StudentLeaderboard products={contributors} sx={{height: "100%", minWidth: "20%", maxWidth: "20%"}} /> {/*Student Leaderboard Feature*/}
         </Stack>
       </Container>
       <Box
@@ -91,13 +94,17 @@ const Page = () => {
         }}
       >
         <Container maxWidth="xl">
-          <Grid xs={6} md={6} lg={6}>
-            {/*Creating and formatting Unresolved Posts Feature*/}
-            {/*Access state var to get the most trending posts within the current date range*/}
-            <Posts posts={[]} sx={{ height: "100%" }} title={"Trending Posts"} /> 
-          </Grid>
-          <Grid xs={12} md={12} lg={8}>
-            <Grid xs={6} md={6} lg={6}>
+          <Grid container spacing={3} direction="column" alignItems="center" >
+            <Grid xs={12}>
+              {/*Creating and formatting Unresolved Posts Feature*/}
+              {/*Access state var to get the most trending posts within the current date range*/}
+              <Posts 
+                posts={[]} 
+                sx={{ height: "100%" }} 
+                title={"Trending Posts"} 
+              /> 
+            </Grid>
+            <Grid xs={12}>
               {/*Creating and formatting Unresolved Posts Feature*/}
               {/*Access state var to get latest unresolved posts within the current date range*/}
               <Posts
