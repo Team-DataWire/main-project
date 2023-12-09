@@ -30,7 +30,7 @@ interface PostData {
 const getTopPosts = async (date1: Date, date2: Date
     ): Promise<PostData[]> => {
         try {
-            const topPosts = (await prisma.$queryRaw`SELECT "slug", "title", "body", "categoryId", "publishedAt" FROM "Post" WHERE "createdAt" BETWEEN ${date1} AND ${date2} ORDER BY ("uniqueViewsCount"*2 + "viewsCount" + "answersCount" * 100) DESC LIMIT 5` as Post[]
+            const topPosts = (await prisma.$queryRaw`SELECT "slug", "title", "body", "categoryId", "publishedAt" FROM "Post" WHERE "body" NOT LIKE 'zzz%' AND "createdAt" BETWEEN ${date1} AND ${date2} ORDER BY ("uniqueViewsCount"*2 + "viewsCount" + "answersCount" * 100) DESC LIMIT 5` as Post[]
             ).map((post: Post) => {const postData = { ...post, category: data[post.categoryId],};
             if (postData) {
                 return postData;
