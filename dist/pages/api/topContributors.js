@@ -43,6 +43,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getTopContributors = void 0;
 var prisma_1 = __importDefault(require("../../typescript/prisma"));
 var getTopContributors = function (startDate, // Default start date of September 5th, 2022 (0-based indices for month)
 endDate, // Default end date of December 20th, 2022 (0-based indices for month)
@@ -102,6 +103,7 @@ count // Default number of contributors to return
         });
     });
 };
+exports.getTopContributors = getTopContributors;
 // API handler function for next.js routing
 function handler(req, res) {
     return __awaiter(this, void 0, void 0, function () {

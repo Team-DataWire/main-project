@@ -9,7 +9,7 @@ interface PostData {
   body: string;
   categoryId: string;
   category: string;
-  createdAt: Date;
+  publishedAt: Date;
 }
 
 // interface for the post data returned from the database
@@ -18,7 +18,7 @@ interface Post {
   title: string;
   body: string;
   categoryId: string;
-  createdAt: Date;
+  publishedAt: Date;
 }
 
 /**
@@ -35,7 +35,7 @@ export const getLatestUnresolved = async (
     const latestUnresolved = await prisma.post
       .findMany({
         where: {
-          createdAt: {
+          publishedAt: {
             gte: startDate,
             lte: endDate,
           },
@@ -60,7 +60,7 @@ export const getLatestUnresolved = async (
           body: true,
           slug: true,
           categoryId: true,
-          createdAt: true,
+          publishedAt: true,
         },
       })
       // map the posts to include the category name, to the PostData interface

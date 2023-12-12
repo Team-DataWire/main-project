@@ -71,7 +71,7 @@ var getLatestUnresolved = function (startDate, endDate, count) {
                     return [4 /*yield*/, prisma_1.default.post
                             .findMany({
                             where: {
-                                createdAt: {
+                                publishedAt: {
                                     gte: startDate,
                                     lte: endDate,
                                 },

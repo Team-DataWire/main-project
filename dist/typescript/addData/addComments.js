@@ -70,7 +70,7 @@ _12_15_json_1.default.forEach(function (post) {
         return {
             id: comment.id,
             body: comment.body,
-            answer: (_a = comment.answer) !== null && _a !== void 0 ? _a : false,
+            answer: (_a = comment.answer) !== null && _a !== void 0 ? _a : false, // sometimes answer is undefined
             createdAt: comment.createdAt,
             publishedAt: comment.publishedAt,
             endorsed: comment.endorsed,

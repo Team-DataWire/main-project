@@ -1,4 +1,8 @@
 "use strict";
+var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,92 +39,51 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDayPosts = void 0;
 var prisma_1 = __importDefault(require("../../typescript/prisma"));
-/**
- * @description Get posts by which day of the week they were published
- * @param startDate
- * @param endDate
- * @returns PostData
- */
-var getDayPosts = function (startDate, endDate) {
-    if (startDate === void 0) { startDate = new Date(2022, 8, 5); }
-    if (endDate === void 0) { endDate = new Date(2022, 11, 15); }
-    return __awaiter(void 0, void 0, void 0, function () {
-        var res_1, posts, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    _a.trys.push([0, 2, , 3]);
-                    res_1 = {
-                        Monday: 0,
-                        Tuesday: 0,
-                        Wednesday: 0,
-                        Thursday: 0,
-                        Friday: 0,
-                        Saturday: 0,
-                        Sunday: 0,
-                    };
-                    return [4 /*yield*/, prisma_1.default.post.findMany({
-                            where: {
-                                createdAt: {
-                                    gte: startDate,
-                                    lte: endDate,
-                                },
-                                // don't need to filter out private posts, can be helpful in the graph
-                            },
-                            select: {
-                                publishedAt: true,
-                            },
-                        })];
-                case 1:
-                    posts = _a.sent();
-                    // for each post, add one to the day of the week it was published
-                    // to the respective `res` object key
-                    posts.forEach(function (post) {
-                        var day = post.publishedAt.getDay();
-                        switch (day) {
-                            case 0:
-                                res_1.Sunday++;
-                                break;
-                            case 1:
-                                res_1.Monday++;
-                                break;
-                            case 2:
-                                res_1.Tuesday++;
-                                break;
-                            case 3:
-                                res_1.Wednesday++;
-                                break;
-                            case 4:
-                                res_1.Thursday++;
-                                break;
-                            case 5:
-                                res_1.Friday++;
-                                break;
-                            case 6:
-                                res_1.Saturday++;
-                                break;
-                        }
-                    });
-                    return [2 /*return*/, res_1];
-                case 2:
-                    error_1 = _a.sent();
-                    throw new Error(error_1);
-                case 3: return [2 /*return*/];
-            }
-        });
+var categories_1 = __importDefault(require("../../typescript/categories"));
+var categoriesCount = function (date1, date2) { return __awaiter(void 0, void 0, void 0, function () {
+    var categoriesCounts, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, prisma_1.default.$queryRaw(templateObject_1 || (templateObject_1 = __makeTemplateObject(["SELECT DISTINCT \"categoryId\" AS \"category\", COUNT(\"number\") AS \"count\" FROM \"Post\" WHERE \"createdAt\" BETWEEN ", " AND ", " GROUP BY \"categoryId\" "], ["SELECT DISTINCT \"categoryId\" AS \"category\", COUNT(\"number\") AS \"count\" FROM \"Post\" WHERE \"createdAt\" BETWEEN ", " AND ", " GROUP BY \"categoryId\" "])), date1, date2)];
+            case 1:
+                categoriesCounts = (_a.sent()).map(function (categoryCount) {
+                    var _a;
+                    var category = (_a = {}, _a[categories_1.default[categoryCount.category]] = Number(categoryCount.count), _a);
+                    if (category) {
+                        return category;
+                    }
+                    else {
+                        return { "NULL": 0 };
+                    }
+                });
+                return [2 /*return*/, Promise.resolve(Object.assign.apply(Object, __spreadArray([{}], categoriesCounts, false)))];
+            case 2:
+                error_1 = _a.sent();
+                return [2 /*return*/, Promise.reject(error_1)];
+            case 3: return [2 /*return*/];
+        }
     });
-};
-exports.getDayPosts = getDayPosts;
+}); };
 // API handler function for next.js routing
 function handler(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var date, dateArray, startDate, endDate, contributors, dateObj, contributors;
+        var date, dateArray, startDate, endDate, categoriesCounts, dateObj, categoriesCounts;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -131,17 +94,17 @@ function handler(req, res) {
                     if (!(dateArray.length === 2)) return [3 /*break*/, 2];
                     startDate = new Date(dateArray[0]);
                     endDate = new Date(dateArray[1]);
-                    return [4 /*yield*/, getDayPosts(startDate, endDate)];
+                    return [4 /*yield*/, categoriesCount(startDate, endDate)];
                 case 1:
-                    contributors = _a.sent();
-                    res.json(contributors);
+                    categoriesCounts = _a.sent();
+                    res.json(categoriesCounts);
                     return [3 /*break*/, 4];
                 case 2:
                     dateObj = new Date(date);
-                    return [4 /*yield*/, getDayPosts(dateObj, dateObj)];
+                    return [4 /*yield*/, categoriesCount(dateObj, dateObj)];
                 case 3:
-                    contributors = _a.sent();
-                    res.json(contributors);
+                    categoriesCounts = _a.sent();
+                    res.json(categoriesCounts);
                     _a.label = 4;
                 case 4: return [2 /*return*/];
             }
@@ -149,3 +112,4 @@ function handler(req, res) {
     });
 }
 exports.default = handler;
+var templateObject_1;

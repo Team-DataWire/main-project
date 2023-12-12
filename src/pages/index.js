@@ -3,13 +3,8 @@ import { Layout as DashboardLayout } from "src/theme/layout";
 import { Posts } from "src/sections/posts";
 import { StudentLeaderboard } from "src/sections/student-leaderboard";
 import { CategoriesChart } from "src/sections/post-categories-chart";
-import Typography from '@mui/material/Typography';
-import {
-  Box,
-  Container,
-  Stack,
-  Unstable_Grid2 as Grid,
-} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { Box, Container, Stack, Unstable_Grid2 as Grid } from "@mui/material";
 import { useState, useEffect } from "react";
 import CalendarItem from "../components/calendar";
 
@@ -47,6 +42,8 @@ const Page = () => {
    * interaction on the calendar
    */
   useEffect(() => {
+    console.log("new date: ", date);
+
     // fetches the top 3 contributors for the given date
     const fetchContributors = async () => {
       const contributors = await fetch(`/api/topContributors?date=${date}`).then((res) =>
@@ -94,10 +91,8 @@ const Page = () => {
       </Head>
       <Container maxWidth="xl">
         {/*Grid which stores Welcome texts and displays them on top of each other*/}
-        <Grid xs={12} md={6} lg={4}> 
-          <Typography variant="h1">
-            Welcome to Campuswire Analytics!
-          </Typography>
+        <Grid xs={12} md={6} lg={4}>
+          <Typography variant="h1">Welcome to Campuswire Analytics!</Typography>
           <Typography variant="h5" gutterBottom>
             Built by Team DataWire
           </Typography>
@@ -106,9 +101,13 @@ const Page = () => {
           </Typography>
         </Grid>
         {/*Stack component stores Date Picker and Student Leaderboard to display them side by side*/}
-        <Stack direction="row" spacing={10} alignItems="center" useFlexGap flexWrap="wrap"> 
+        <Stack direction="row" spacing={10} alignItems="center" useFlexGap flexWrap="wrap">
           <CalendarItem value={date} onChange={setDate} /> {/*Date Picker Feature*/}
-          <StudentLeaderboard products={contributors} sx={{height: "100%", minWidth: "20%", maxWidth: "20%"}} /> {/*Student Leaderboard Feature*/}
+          <StudentLeaderboard
+            products={contributors}
+            sx={{ height: "100%", minWidth: "20%", maxWidth: "20%" }}
+          />{" "}
+          {/*Student Leaderboard Feature*/}
         </Stack>
       </Container>
       <Box
@@ -119,15 +118,11 @@ const Page = () => {
         }}
       >
         <Container maxWidth="xl">
-          <Grid container spacing={3} direction="column" alignItems="center" >
+          <Grid container spacing={3} direction="column" alignItems="center">
             <Grid xs={12}>
               {/*Creating and formatting Unresolved Posts Feature*/}
               {/*Access state var to get the most trending posts within the current date range*/}
-              <Posts 
-                posts={topPosts} 
-                sx={{ height: "100%" }} 
-                title={"Trending Posts"} 
-              /> 
+              <Posts posts={topPosts} sx={{ height: "100%" }} title={"Trending Posts"} />
             </Grid>
             <Grid xs={12}>
               {/*Creating and formatting Unresolved Posts Feature*/}
@@ -136,7 +131,7 @@ const Page = () => {
                 posts={latestUnresolvedPosts}
                 sx={{ height: "100%" }}
                 title={"Unresolved Posts"}
-              /> 
+              />
             </Grid>
             <Grid xs={9} lg={9}>
               {/*Creating and formatting Posts by Category Graph*/}

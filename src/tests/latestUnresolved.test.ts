@@ -16,7 +16,7 @@ describe("getLatestUnresolved", () => {
     expect(result[0]).toHaveProperty("body");
     expect(result[0]).toHaveProperty("categoryId");
     expect(result[0]).toHaveProperty("category");
-    expect(result[0]).toHaveProperty("createdAt");
+    expect(result[0]).toHaveProperty("publishedAt");
   });
   test("correct types", async () => {
     const result = await getLatestUnresolved();
@@ -27,7 +27,7 @@ describe("getLatestUnresolved", () => {
     expect(typeof result[0].body).toBe("string");
     expect(typeof result[0].categoryId).toBe("string");
     expect(typeof result[0].category).toBe("string");
-    expect(typeof result[0].createdAt).toBe("object");
+    expect(typeof result[0].publishedAt).toBe("object");
   });
   test("correct values for single date", async () => {
     // select a single Date (December 4, 2022)
@@ -41,7 +41,7 @@ describe("getLatestUnresolved", () => {
     );
     expect(result[0].categoryId).toBe("fa89385b-0384-4274-91f4-e56c97171be1");
     expect(result[0].category).toBe("HW 6");
-    expect(new Date(result[0].createdAt)).toEqual(new Date("2022-12-04T20:22:33.744Z"));
+    expect(new Date(result[0].publishedAt)).toEqual(new Date("2022-12-04T20:23:31.192Z"));
   });
   test("correct values for multiple dates", async () => {
     // select a date range (October 1, 2022 - October 5, 2022)

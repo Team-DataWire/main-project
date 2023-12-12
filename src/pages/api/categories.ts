@@ -33,7 +33,6 @@ const categoriesCount = async (date1: Date, date2: Date
 // API handler function for next.js routing
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { date } = req.query;
-    console.log(date)
   
     // handle the date range
     if (date) {
@@ -43,14 +42,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           // if there are two dates, use the first as the start date and the second as the end date
           const startDate = new Date(dateArray[0]);
           const endDate = new Date(dateArray[1]);
-          console.log("startDate", startDate)
           const categoriesCounts = await categoriesCount(startDate, endDate);
-          console.log(categoriesCounts);
           res.json(categoriesCounts);
         } else {
           // if there is only one date, use it as both the start and end date
           const dateObj = new Date(date);
-          console.log("date", dateObj)
           const categoriesCounts = await categoriesCount(dateObj, dateObj);
           res.json(categoriesCounts);
         }
