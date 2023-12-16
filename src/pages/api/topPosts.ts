@@ -27,10 +27,10 @@ interface PostData {
 // in that date range as determined by highest viewsCount + 2*uniqueViewsCount + 100 * # of comments.
 // It reutrns an array of promises. This formula weights all three components of post popularity roughly evenly
 
-const getTopPosts = async (date1: Date, date2: Date
+const getTopPosts = async (startDate: Date, endDate: Date
     ): Promise<PostData[]> => {
         try {
-            const topPosts = (await prisma.$queryRaw`SELECT "slug", "title", "body", "categoryId", "publishedAt" FROM "Post" WHERE "body" NOT LIKE 'zzz%' AND "createdAt" BETWEEN ${date1} AND ${date2} ORDER BY ("uniqueViewsCount"*2 + "viewsCount" + "answersCount" * 100) DESC LIMIT 5` as Post[]
+            const topPosts = (await prisma.$queryRaw`SELECT "slug", "title", "body", "categoryId", "publishedAt" FROM "Post" WHERE "body" NOT LIKE 'zzz%' AND "createdAt" BETWEEN ${startDate} AND ${endDate} ORDER BY ("uniqueViewsCount"*2 + "viewsCount" + "answersCount" * 100) DESC LIMIT 5` as Post[]
             ).map((post: Post) => {const postData = { ...post, category: data[post.categoryId],};
             if (postData) {
                 return postData;
@@ -45,6 +45,8 @@ const getTopPosts = async (date1: Date, date2: Date
             return Promise.reject(error);
         }
     };
+
+export {getTopPosts};
 
 // API handler function for next.js routing
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

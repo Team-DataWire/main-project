@@ -11,10 +11,10 @@ interface categories {
     [key: string]: number;
 }
 
-const categoriesCount = async (date1: Date, date2: Date
+const categoriesCount = async (startDate: Date, endDate: Date
     ): Promise<categories[]> => {
         try {
-            const categoriesCounts = (await prisma.$queryRaw`SELECT DISTINCT "categoryId" AS "category", COUNT("number") AS "count" FROM "Post" WHERE "createdAt" BETWEEN ${date1} AND ${date2} GROUP BY "categoryId" ` as categoryCounts[]
+            const categoriesCounts = (await prisma.$queryRaw`SELECT DISTINCT "categoryId" AS "category", COUNT("number") AS "count" FROM "Post" WHERE "createdAt" BETWEEN ${startDate} AND ${endDate} GROUP BY "categoryId" ` as categoryCounts[]
             ).map((categoryCount: categoryCounts) => {const category = { [data[categoryCount.category]]: Number(categoryCount.count)};
             if (category) {
                 return category;
@@ -29,6 +29,7 @@ const categoriesCount = async (date1: Date, date2: Date
         }
     };
 
+export {categoriesCount};
 
 // API handler function for next.js routing
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
